@@ -6,6 +6,7 @@
   <title>Formulaire Cliché Radar - Commissariat de Rivemont</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    /* HEADER */
     header {
       background-color: #87ceeb; /* bleu ciel */
       padding: 20px 0;
@@ -18,17 +19,22 @@
       font-weight: 700;
       font-size: 28px;
     }
+
+    /* CORPS */
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
       background-color: #f0f4f8;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       min-height: 100vh;
       padding: 20px;
       box-sizing: border-box;
+      flex-direction: column;
+      align-items: center;
     }
+
     .form-container {
       background-color: #003366; /* bleu foncé */
       padding: 30px 40px;
@@ -37,18 +43,23 @@
       max-width: 400px;
       box-sizing: border-box;
       color: white;
+      margin-top: 40px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
+
     .form-container h2 {
       margin-top: 0;
       margin-bottom: 25px;
       font-weight: 600;
       text-align: center;
     }
+
     label {
       display: block;
       margin-bottom: 6px;
       font-weight: 600;
     }
+
     input[type="text"] {
       width: 100%;
       padding: 10px 12px;
@@ -61,9 +72,11 @@
       color: #003366;
       font-weight: 400;
     }
+
     input[type="text"]::placeholder {
       color: #999;
     }
+
     button {
       width: 100%;
       padding: 12px;
@@ -72,32 +85,69 @@
       border-radius: 4px;
       font-size: 18px;
       font-weight: 600;
-      color: #000000;
+      color: #003366;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
+
     button:hover {
       background-color: #59a7d8;
+    }
+
+    /* Message d'erreur */
+    .error-message {
+      color: #ff6666;
+      margin-bottom: 15px;
+      display: none;
+      font-weight: 600;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
+  <header>
+    <h1>COMMISSARIAT DE RIVEMONT</h1>
+  </header>
+
   <div class="form-container">
-    <h2>Demande de cliché radar</h2>
-    <form action="#" method="POST">
+    <h2>Formulaire Cliché Radar</h2>
+    <div id="error" class="error-message">Veuillez remplir tous les champs.</div>
+    <form id="radarForm">
       <label for="contravention">Numéro de contravention</label>
-      <input type="text" id="contravention" name="contravention" value="770010956" required />
+      <input type="text" id="contravention" name="contravention" placeholder="770010956" required />
 
       <label for="identifiant">Identifiant du radar</label>
-      <input type="text" id="identifiant" name="identifiant" value="7732" required />
+      <input type="text" id="identifiant" name="identifiant" placeholder="7732" required />
 
       <label for="numero-radar">Numéro du radar</label>
-      <input type="text" id="numero-radar" name="numero-radar" value="339" required />
+      <input type="text" id="numero-radar" name="numero-radar" placeholder="339" required />
 
       <button type="submit">Obtenir le cliché radar</button>
     </form>
   </div>
+
+  <script>
+    document.getElementById('radarForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // bloque l'envoi automatique
+
+      // Récupérer les valeurs
+      const contravention = document.getElementById('contravention').value.trim();
+      const identifiant = document.getElementById('identifiant').value.trim();
+      const numeroRadar = document.getElementById('numero-radar').value.trim();
+      const errorDiv = document.getElementById('error');
+
+      if (contravention === '' || identifiant === '' || numeroRadar === '') {
+        errorDiv.style.display = 'block';
+      } else {
+        errorDiv.style.display = 'none';
+        // Ouvrir la page dans un nouvel onglet
+        window.open('cliche-radar.html', '_blank');
+        // Optionnel : reset formulaire
+        this.reset();
+      }
+    });
+  </script>
 
 </body>
 </html>
