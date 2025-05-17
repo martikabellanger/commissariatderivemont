@@ -5,6 +5,7 @@
 }
 
 body {
+  margin: 0;
   font-family: 'Montserrat', sans-serif;
   background-color: #f4f4f4;
   color: #1a1a1a;
@@ -13,8 +14,13 @@ body {
 /* HEADER */
 header {
   background-color: #87ceeb; /* bleu ciel */
-  padding: 30px 20px;
+ padding: 15px 0;
   text-align: center;
+  color: white;
+  font-weight: 600;
+  font-size: 1.8rem;
+  box-sizing: border-box;
+  user-select: none;
 }
 
 header h1 {
