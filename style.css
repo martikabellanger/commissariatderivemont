@@ -95,3 +95,32 @@ header h1 {
 .btn:hover {
   background-color: #002244;
 }
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "item1 item2"
+      "item3 item3";
+    gap: 20px;
+  }
+
+  .service-item:nth-child(1) {
+    grid-area: item1;
+  }
+
+  .service-item:nth-child(2) {
+    grid-area: item2;
+  }
+
+  .service-item:nth-child(3) {
+    grid-area: item3;
+  }
+}
