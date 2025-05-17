@@ -141,6 +141,7 @@
     if (localStorage.getItem('enqueteurConnecte') === 'true') {
       document.getElementById('login-container').style.display = 'none';
       document.getElementById('content').style.display = 'block';
+      document.getElementById('logout-bar').style.display = 'block';
     }
 
     document.getElementById('login-form').addEventListener('submit', function(event) {
@@ -156,6 +157,7 @@
         localStorage.setItem('enqueteurConnecte', 'true');
         document.getElementById('login-container').style.display = 'none';
         document.getElementById('content').style.display = 'block';
+        document.getElementById('logout-bar').style.display = 'block';
         error.style.display = 'none';
       } else {
         error.style.display = 'block';
