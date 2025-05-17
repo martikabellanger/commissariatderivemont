@@ -96,6 +96,14 @@ header h1 {
   background-color: #002244;
 }
 
+.suivi-dossier {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 100px; /* marge interne gauche/droite */
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
+
 .suivi-dossier h3 {
   background-color: #003366; /* bleu foncé */
   color: white;
