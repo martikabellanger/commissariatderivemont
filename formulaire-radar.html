@@ -4,28 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Formulaire Cliché Radar - Commissariat de Rivemont</title>
-  <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    
-    <!-- HEADER -->
-  <header>
-    <h1>COMMISSARIAT DE RIVEMONT</h1>
-  </header>
-    
     /* CORPS */
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
       background-color: #f0f4f8;
       display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
       min-height: 100vh;
       padding: 20px;
       box-sizing: border-box;
-      flex-direction: column;
-      align-items: center;
+    }
+
+    header {
+      background-color: #87ceeb; /* bleu ciel */
+      width: 100%;
+      padding: 15px 0;
+      text-align: center;
+      color: white;
+      font-weight: 600;
+      font-size: 1.8rem;
+      box-sizing: border-box;
+      user-select: none;
     }
 
     .form-container {
@@ -100,12 +104,12 @@
 <body>
 
   <header>
-    <h1>COMMISSARIAT DE RIVEMONT</h1>
+    COMMISSARIAT DE RIVEMONT
   </header>
 
   <div class="form-container">
-    <h2>Formulaire Cliché Radar</h2>
-    <div id="error" class="error-message">Erreur.</div>
+    <h2>Formulaire cliché radar</h2>
+    <div id="error" class="error-message">Veuillez remplir correctement tous les champs.</div>
     <form id="radarForm">
       <label for="contravention">Numéro de contravention</label>
       <input type="text" id="contravention" name="contravention"/>
@@ -131,14 +135,12 @@
       const errorDiv = document.getElementById('error');
 
       if (contravention === '770010956' && identifiant === '7732' && numeroRadar === '339') {
-  // Tout est bon, on ouvre la page
-  errorDiv.style.display = 'none';
-  window.open('cliche-radar.html', '_blank');
-  this.reset();
-} else {
-  // Sinon on affiche l'erreur
-  errorDiv.style.display = 'block';
-}
+        errorDiv.style.display = 'none';
+        window.open('cliche-radar.html', '_blank');
+        this.reset();
+      } else {
+        errorDiv.style.display = 'block';
+      }
     });
   </script>
 
