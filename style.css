@@ -127,4 +127,8 @@ header h1 {
     grid-column: 1;
     grid-row: 2;
   }
+
+  header h1 {
+    font-size: 25px;
+  }
 }
