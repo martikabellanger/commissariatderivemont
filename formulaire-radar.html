@@ -115,13 +115,13 @@
     <div id="error" class="error-message">Veuillez remplir tous les champs.</div>
     <form id="radarForm">
       <label for="contravention">Numéro de contravention</label>
-      <input type="text" id="contravention" name="contravention" placeholder="770010956" required />
+      <input type="text" id="contravention" name="contravention" required />
 
       <label for="identifiant">Identifiant du radar</label>
-      <input type="text" id="identifiant" name="identifiant" placeholder="7732" required />
+      <input type="text" id="identifiant" name="identifiant" required />
 
       <label for="numero-radar">Numéro du radar</label>
-      <input type="text" id="numero-radar" name="numero-radar" placeholder="339" required />
+      <input type="text" id="numero-radar" name="numero-radar" required />
 
       <button type="submit">Obtenir le cliché radar</button>
     </form>
@@ -137,7 +137,7 @@
       const numeroRadar = document.getElementById('numero-radar').value.trim();
       const errorDiv = document.getElementById('error');
 
-      if (contravention === '' || identifiant === '' || numeroRadar === '') {
+      if (contravention === '770010956' || identifiant === '7732' || numeroRadar === '339') {
         errorDiv.style.display = 'block';
       } else {
         errorDiv.style.display = 'none';
