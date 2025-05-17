@@ -130,15 +130,15 @@
       const numeroRadar = document.getElementById('numero-radar').value.trim();
       const errorDiv = document.getElementById('error');
 
-      if (contravention === '770010956' || identifiant === '7732' || numeroRadar === '339') {
-        errorDiv.style.display = 'block';
-      } else {
-        errorDiv.style.display = 'none';
-        // Ouvrir la page dans un nouvel onglet
-        window.open('cliche-radar.html', '_blank');
-        // Optionnel : reset formulaire
-        this.reset();
-      }
+      if (contravention === '770010956' && identifiant === '7732' && numeroRadar === '339') {
+  // Tout est bon, on ouvre la page
+  errorDiv.style.display = 'none';
+  window.open('cliche-radar.html', '_blank');
+  this.reset();
+} else {
+  // Sinon on affiche l'erreur
+  errorDiv.style.display = 'block';
+}
     });
   </script>
 
