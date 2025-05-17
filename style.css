@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f4f4f4;
+  color: #1a1a1a;
+}
+
+/* HEADER */
+header {
+  background-color: #87ceeb; /* bleu ciel */
+  padding: 30px 20px;
+  text-align: center;
+}
+
+header h1 {
+  color: white;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+/* INTRODUCTION */
+.intro {
+  background-color: white;
+  text-align: center;
+  padding: 30px 20px;
+  color: #003366; /* bleu foncé */
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* PHOTOS DE POLICIERS */
+.police-images {
+  display: flex;
+  width: 100%;
+}
+
+.police-images img {
+  width: 50%;
+  height: auto;
+  display: block;
+}
+
+/* SERVICES */
+.services {
+  background-color: white;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.services h2 {
+  color: #003366;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.services-grid {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service-item {
+  flex: 1 1 calc(33.333% - 20px);
+  min-width: 250px;
+  text-align: center;
+}
+
+.service-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #003366;
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #002244;
+}
