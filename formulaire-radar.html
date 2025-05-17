@@ -7,20 +7,17 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    /* CORPS */
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background-color: #f0f4f8;
+    /* Centrer uniquement la zone formulaire */
+    .page-wrapper {
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
+      justify-content: center;
+      align-items: flex-start;
       min-height: 100vh;
       padding: 20px;
       box-sizing: border-box;
+      background-color: #f4f4f4; /* même que dans style.css */
     }
-    
+
     .form-container {
       background-color: #003366; /* bleu foncé */
       padding: 30px 40px;
@@ -38,6 +35,7 @@
       margin-bottom: 25px;
       font-weight: 600;
       text-align: center;
+      text-transform: capitalize;
     }
 
     label {
@@ -91,34 +89,35 @@
   </style>
 </head>
 <body>
-<body>
+
   <!-- HEADER -->
   <header>
     <h1>COMMISSARIAT DE RIVEMONT</h1>
   </header>
 
-  <div class="form-container">
-    <h2>Formulaire cliché radar</h2>
-    <div id="error" class="error-message">Veuillez remplir correctement tous les champs.</div>
-    <form id="radarForm">
-      <label for="contravention">Numéro de contravention</label>
-      <input type="text" id="contravention" name="contravention"/>
+  <div class="page-wrapper">
+    <div class="form-container">
+      <h2>Formulaire cliché radar</h2>
+      <div id="error" class="error-message">Veuillez remplir correctement tous les champs.</div>
+      <form id="radarForm">
+        <label for="contravention">Numéro de contravention</label>
+        <input type="text" id="contravention" name="contravention"/>
 
-      <label for="identifiant">Identifiant du radar</label>
-      <input type="text" id="identifiant" name="identifiant"/>
+        <label for="identifiant">Identifiant du radar</label>
+        <input type="text" id="identifiant" name="identifiant"/>
 
-      <label for="numero-radar">Numéro du radar</label>
-      <input type="text" id="numero-radar" name="numero-radar"/>
+        <label for="numero-radar">Numéro du radar</label>
+        <input type="text" id="numero-radar" name="numero-radar"/>
 
-      <button type="submit">Obtenir le cliché radar</button>
-    </form>
+        <button type="submit">Obtenir le cliché radar</button>
+      </form>
+    </div>
   </div>
 
   <script>
     document.getElementById('radarForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // bloque l'envoi automatique
+      event.preventDefault();
 
-      // Récupérer les valeurs
       const contravention = document.getElementById('contravention').value.trim();
       const identifiant = document.getElementById('identifiant').value.trim();
       const numeroRadar = document.getElementById('numero-radar').value.trim();
