@@ -159,8 +159,10 @@ header h1 {
     box-sizing: border-box;
   }
 
-  .service-item {
+ .service-item {
+    min-width: auto; /* enlève la limite minimale pour mobile */
   }
+
 
   .service-item:nth-child(1) {
     grid-column: 1;
