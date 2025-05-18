@@ -380,10 +380,10 @@ html, body {
 
     let heureArrivee = localStorage.getItem(ARRIVEE_KEY);
 if (!heureArrivee) {
-  heureArrivee = Date.now().toString();
+  heureArrivee = now.toString();
   localStorage.setItem(ARRIVEE_KEY, heureArrivee);
 }
-const tempsEcoule = Date.now() - parseInt(heureArrivee, 10);
+const tempsEcoule = now - parseInt(heureArrivee, 10);
 
     const delai1 = 10 * 60 * 1000;
     const delai2 = 20 * 60 * 1000;
