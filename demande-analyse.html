@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demande d'analyse</title>
+  <style>
+    /* Reset simple */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff;
+      color: #333;
+    }
+
+    /* Header simple, à remplacer par le tien */
+    header {
+      background-color: #222;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    main {
+      display: flex;
+      justify-content: center;
+      gap: 40px; /* espace entre les colonnes */
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .colonne {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 20px;
+      width: 45%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      border-radius: 8px;
+    }
+
+    .colonne img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      object-fit: contain;
+    }
+
+    button.demande-analyse {
+      background-color: #003366; /* bleu foncé */
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      max-width: 250px;
+    }
+
+    button.demande-analyse:hover:not(:disabled) {
+      background-color: #00509e;
+    }
+
+    button.demande-analyse:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+    }
+
+    .barre-chargement {
+      width: 100%;
+      max-width: 250px;
+      height: 20px;
+      background-color: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+      position: relative;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: #003366;
+      width: 0;
+      transition: width 1s linear;
+    }
+
+    .texte-chargement {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .resultat {
+      margin-top: 10px;
+      color: #222;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    @media(max-width: 700px) {
+      main {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .colonne {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Mon Site - Analyse des échantillons
+  </header>
+
+  <main>
+    <!-- Colonne gauche -->
+    <div class="colonne" id="col-gauche">
+      <img src="photo-mégot.jpg" alt="Photo mégot" />
+      <button class="demande-analyse" id="btn-gauche">Demander une analyse</button>
+      <div class="barre-chargement" id="barre-gauche" style="display:none;">
+        <div class="progress" id="progress-gauche"></div>
+      </div>
+      <div class="texte-chargement" id="texte-chargement-gauche" style="display:none;">
+        Analyse en cours...
+      </div>
+      <div class="resultat" id="resultat-gauche" style="display:none;"></div>
+    </div>
+
+    <!-- Colonne droite -->
+    <div class="colonne" id="col-droite">
+      <img src="photo-bouteille.jpg" alt="Photo bouteille" />
+      <button class="demande-analyse" id="btn-droite">Demander une analyse</button>
+      <div class="barre-chargement" id="barre-droite" style="display:none;">
+        <div class="progress" id="progress-droite"></div>
+      </div>
+      <div class="texte-chargement" id="texte-chargement-droite" style="display:none;">
+        Analyse en cours...
+      </div>
+      <div class="resultat" id="resultat-droite" style="display:none;"></div>
+    </div>
+  </main>
+
+  <script>
+    const DUREE_ANALYSE_MS = 90000; // 90 secondes
+
+    // Textes résultats
+    const RESULTATS = {
+      gauche: "Aucune anomalie détectée. Cigarette de la marque Marlboro. ADN prélevé : Simon Vanterin.",
+      droite: "Anomalie détectée. La Bête Bière blonde de fermentation basse de style Belgian Strong Ale. Composition originale : Ingrédients : EAU, MALT D'ORGE, SIROP DE GLUCOSE, HOUBLONS, EXTRAIT DE HOUBLON. CONTIENT NATURELLEMENT DES SULFITES\nAllergènes : Gluten, Anhydride sulfureux et sulfites. Retour prélèvement : La bouteille contient de la bière type La Choulette 9% jus de fraise."
+    };
+
+    // Sauvegarde / chargement du résultat en localStorage
+    function sauvegarderResultat(cote, texte) {
+      localStorage.setItem('analyse_' + cote, texte);
+    }
+    function chargerResultat(cote) {
+      return localStorage.getItem('analyse_' + cote);
+    }
+
+    function demarrerAnalyse(cote) {
+      const btn = document.getElementById('btn-' + cote);
+      const barre = document.getElementById('barre-' + cote);
+      const progress = document.getElementById('progress-' + cote);
+      const texteChargement = document.getElementById('texte-chargement-' + cote);
+      const resultat = document.getElementById('resultat-' + cote);
+
+      // Désactivation bouton
+      btn.disabled = true;
+
+      // Cacher résultat précédent
+      resultat.style.display = 'none';
+
+      // Afficher barre et texte chargement
+      barre.style.display = 'block';
+      texteChargement.style.display = 'block';
+
+      let startTime = Date.now();
+
+      // Animation barre de progression avec intervalle 100ms
+      const interval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const progressPercent = Math.min(100, (elapsed / DUREE_ANALYSE_MS) * 100);
+        progress.style.width = progressPercent + '%';
+
+        if (elapsed >= DUREE_ANALYSE_MS) {
+          clearInterval(interval);
+
+          // Cacher barre et texte chargement
+          barre.style.display = 'none';
+          texteChargement.style.display = 'none';
+
+          // Afficher résultat final
+          resultat.textContent = RESULTATS[cote];
+          resultat.style.display = 'block';
+
+          // Sauvegarder résultat en localStorage
+          sauvegarderResultat(cote);
+        }
+      }, 100);
+    }
+
+    // Au chargement de la page, vérifier si résultats déjà sauvegardés
+    window.addEventListener('DOMContentLoaded', () => {
+      ['gauche', 'droite'].forEach(cote => {
+        const texteSauvegarde = chargerResultat(cote);
+        if (texteSauvegarde) {
+          // Afficher résultat directement, cacher bouton et barre chargement
+          const btn = document.getElementById('btn-' + cote);
+          const barre = document.getElementById('barre-' + cote);
+          const texteChargement = document.getElementById('texte-chargement-' + cote);
+          const resultat = document.getElementById('resultat-' + cote);
+
+          btn.disabled = true;
+          btn.style.display = 'none';
+          barre.style.display = 'none';
+          texteChargement.style.display = 'none';
+
+          resultat.textContent = texteSauvegarde;
+          resultat.style.display = 'block';
+        }
+      });
+    });
+
+    // Écouteurs de clic sur boutons
+    document.getElementById('btn-gauche').addEventListener('click', () => {
+      demarrerAnalyse('gauche');
+    });
+    document.getElementById('btn-droite').addEventListener('click', () => {
+      demarrerAnalyse('droite');
+    });
+  </script>
+</body>
+</html>
