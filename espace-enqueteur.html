@@ -168,6 +168,11 @@ html, body {
   overflow-x: hidden;
 }
 
+.mobile-break {
+  display: none;
+}
+
+
 /* Responsive */
 @media (max-width: 1024px) {
   .blocs-container {
@@ -183,6 +188,10 @@ html, body {
 @media (max-width: 768px) {
   .blocs-container {
     padding: 0 6px;
+  }
+
+  .mobile-break {
+    display: inline;
   }
 
   .row {
@@ -286,11 +295,11 @@ html, body {
           <h3>Documents</h3>
           <br>
           <ul>
-            <li><a href="Telephone_Portable_S.Vanterin.jpg" target="_blank">ServiceInformatique/Téléphone_Portable_S.Vanterin</a></li>
-            <li><a href="Sonaria_Musique_S.Vanterin.jpg" target="_blank">ServiceInformatique/Sonaria_Musique_S.Vanterin</a></li>
-            <li><a href="Mails_S.Vanterin.jpg" target="_blank">ServiceInformatique/Mails_S.Vanterin</a></li>
-            <li><a href="Messages_S.Vanterin.jpg" target="_blank">ServiceInformatique/Messages_S.Vanterin</a></li>
-            <li><a href="Recu_Makey_S.Vanterin.jpg" target="_blank">ServiceInformatique/Reçu_Makey_S.Vanterin</a></li>
+            <li><a href="Telephone_Portable_S.Vanterin.jpg" target="_blank">ServiceInformatique/<br class="mobile-break" />Téléphone_Portable_S.Vanterin</a></li>
+            <li><a href="Sonaria_Musique_S.Vanterin.jpg" target="_blank">ServiceInformatique/<br class="mobile-break" />Sonaria_Musique_S.Vanterin</a></li>
+            <li><a href="Mails_S.Vanterin.jpg" target="_blank">ServiceInformatique/<br class="mobile-break" />Mails_S.Vanterin</a></li>
+            <li><a href="Messages_S.Vanterin.jpg" target="_blank">ServiceInformatique/<br class="mobile-break" />Messages_S.Vanterin</a></li>
+            <li><a href="Recu_Makey_S.Vanterin.jpg" target="_blank">ServiceInformatique/<br class="mobile-break" />Reçu_Makey_S.Vanterin</a></li>
           </ul>
         </div>
       </div>
