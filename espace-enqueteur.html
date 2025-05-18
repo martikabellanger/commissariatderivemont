@@ -271,6 +271,42 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       if (localStorage.getItem('enqueteurConnecte') === 'true') {
+
+ // Gérer l'affichage du bouton après 10 minutes
+      const bouton = document.getElementById('reveal-button-container');
+      const BOUTON_KEY = 'boutonRevele';
+      const ARRIVEE_KEY = 'heureArrivee';
+      const now = Date.now();
+
+      // Si le bouton a déjà été affiché auparavant, on le montre directement
+      if (localStorage.getItem(BOUTON_KEY) === 'true') {
+        bouton.style.display = 'block';
+      } else {
+        // Vérifie s'il y a une heure d'arrivée déjà stockée
+        let heureArrivee = localStorage.getItem(ARRIVEE_KEY);
+
+        if (!heureArrivee) {
+          // Sinon, on l'enregistre maintenant
+          localStorage.setItem(ARRIVEE_KEY, now.toString());
+          heureArrivee = now;
+        }
+
+        const tempsEcoule = now - parseInt(heureArrivee, 10);
+        const delai = 10 * 60 * 1000; // 10 minutes en ms
+        const tempsRestant = delai - tempsEcoule;
+
+        if (tempsRestant <= 0) {
+          bouton.style.display = 'block';
+          localStorage.setItem(BOUTON_KEY, 'true');
+        } else {
+          // Affiche le bouton une fois les 10 minutes atteintes
+          setTimeout(() => {
+            bouton.style.display = 'block';
+            localStorage.setItem(BOUTON_KEY, 'true');
+          }, tempsRestant);
+        }
+      }
+        
         document.getElementById('login-container').style.display = 'none';
         document.getElementById('content').style.display = 'block';
         document.getElementById('logout-bar').style.display = 'block';
@@ -304,6 +340,8 @@
 
       document.getElementById('confirm-logout').addEventListener('click', () => {
         localStorage.removeItem('enqueteurConnecte');
+        localStorage.removeItem('heureArrivee');
+        localStorage.removeItem('boutonRevele');
         location.reload();
       });
     });
