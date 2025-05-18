@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+
+    html, body {
+  overflow-x: hidden;
+}
+    
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
@@ -146,29 +151,38 @@
       text-decoration: underline;
     }
 
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .blocs-container {
-        padding: 30px 40px;
-      }
-      .bloc {
-        padding: 30px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .blocs-container {
-        padding: 20px;
-      }
-      .row {
-        flex-direction: column;
-        gap: 30px;
-      }
-    }
-
-  @media (max-width: 480px) {
+/* Responsive */
+@media (max-width: 1024px) {
   .blocs-container {
-    padding: 10px;
+    padding: 20px 30px;
+  }
+
+  .bloc {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .blocs-container {
+    padding: 0 16px; /* marge blanche à gauche/droite */
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center; /* centrer les blocs horizontalement */
+  }
+
+  .bloc {
+    width: 100%;
+    max-width: 100%;
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .blocs-container {
+    padding: 0 12px;
   }
 
   .bloc {
