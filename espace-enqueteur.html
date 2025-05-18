@@ -368,7 +368,7 @@ html, body {
   <!-- Script -->
   <script>
   document.addEventListener('DOMContentLoaded', function () {
-  const BOUTON_KEY = 'boutonRevele';
+  const BOUTON1_KEY = 'boutonRevele';
   const BOUTON2_KEY = 'secondBoutonRevele';
   const ARRIVEE_KEY = 'heureArrivee';
 
@@ -377,49 +377,43 @@ html, body {
     const bouton2 = document.getElementById('second-button');
     const avertissement = document.getElementById('avertissement');
 
+    // Récupérer ou définir l'heure d'arrivée
     let heureArrivee = localStorage.getItem(ARRIVEE_KEY);
     if (!heureArrivee) {
       heureArrivee = Date.now().toString();
       localStorage.setItem(ARRIVEE_KEY, heureArrivee);
     }
 
-    const now = Date.now(); // décalé ici, APRES la création éventuelle de heureArrivee
+    const now = Date.now();
     const tempsEcoule = now - parseInt(heureArrivee, 10);
 
-    const delai1 = 10 * 60 * 1000;
-    const delai2 = 20 * 60 * 1000;
-    const restant1 = delai1 - tempsEcoule;
-    const restant2 = delai2 - tempsEcoule;
+    const delai1 = 10 * 60 * 1000; // 10 minutes en ms
+    const delai2 = 20 * 60 * 1000; // 20 minutes en ms
 
+    // Fonction pour vérifier si on peut cacher l'avertissement
     function verifierSuppressionAvertissement() {
-      const bouton1Visible = bouton1.style.display === 'inline-block';
-      const bouton2Visible = bouton2.style.display === 'inline-block';
-      if (bouton1Visible && bouton2Visible && avertissement) {
-        avertissement.style.display = 'none';
+      if (bouton1.style.display === 'inline-block' && bouton2.style.display === 'inline-block') {
+        if (avertissement) {
+          avertissement.style.display = 'none';
+        }
       }
     }
 
-    // Bouton 1
-    if (localStorage.getItem(BOUTON_KEY) === 'true') {
+    // Afficher le bouton 1 si déjà révélé ou délai écoulé, sinon timer
+    if (localStorage.getItem(BOUTON1_KEY) === 'true' || tempsEcoule >= delai1) {
       bouton1.style.display = 'inline-block';
-      verifierSuppressionAvertissement();
-    } else if (restant1 <= 0) {
-      bouton1.style.display = 'inline-block';
-      localStorage.setItem(BOUTON_KEY, 'true');
+      localStorage.setItem(BOUTON1_KEY, 'true');
       verifierSuppressionAvertissement();
     } else {
       setTimeout(() => {
         bouton1.style.display = 'inline-block';
-        localStorage.setItem(BOUTON_KEY, 'true');
+        localStorage.setItem(BOUTON1_KEY, 'true');
         verifierSuppressionAvertissement();
-      }, restant1);
+      }, delai1 - tempsEcoule);
     }
 
-    // Bouton 2
-    if (localStorage.getItem(BOUTON2_KEY) === 'true') {
-      bouton2.style.display = 'inline-block';
-      verifierSuppressionAvertissement();
-    } else if (restant2 <= 0) {
+    // Afficher le bouton 2 si déjà révélé ou délai écoulé, sinon timer
+    if (localStorage.getItem(BOUTON2_KEY) === 'true' || tempsEcoule >= delai2) {
       bouton2.style.display = 'inline-block';
       localStorage.setItem(BOUTON2_KEY, 'true');
       verifierSuppressionAvertissement();
@@ -428,16 +422,15 @@ html, body {
         bouton2.style.display = 'inline-block';
         localStorage.setItem(BOUTON2_KEY, 'true');
         verifierSuppressionAvertissement();
-      }, restant2);
+      }, delai2 - tempsEcoule);
     }
 
-    // Affichage des éléments de la page
+    // Afficher les sections liées à la connexion
     document.getElementById('reveal-button-container').style.display = 'block';
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('content').style.display = 'block';
     document.getElementById('logout-bar').style.display = 'block';
   }
-
     
       document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault();
