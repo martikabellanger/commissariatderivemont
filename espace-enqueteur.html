@@ -367,70 +367,6 @@ html, body {
 
   <!-- Script -->
   <script>
-  document.addEventListener('DOMContentLoaded', function () {
-  const BOUTON1_KEY = 'boutonRevele';
-  const BOUTON2_KEY = 'secondBoutonRevele';
-  const ARRIVEE_KEY = 'heureArrivee';
-
-  if (localStorage.getItem('enqueteurConnecte') === 'true') {
-    const bouton1 = document.getElementById('reveal-button');
-    const bouton2 = document.getElementById('second-button');
-    const avertissement = document.getElementById('avertissement');
-
-    // Récupérer ou définir l'heure d'arrivée
-    let heureArrivee = localStorage.getItem(ARRIVEE_KEY);
-    if (!heureArrivee) {
-      heureArrivee = Date.now().toString();
-      localStorage.setItem(ARRIVEE_KEY, heureArrivee);
-    }
-
-    const now = Date.now();
-    const tempsEcoule = now - parseInt(heureArrivee, 10);
-
-    const delai1 = 10 * 60 * 1000; // 10 minutes en ms
-    const delai2 = 20 * 60 * 1000; // 20 minutes en ms
-
-    // Fonction pour vérifier si on peut cacher l'avertissement
-    function verifierSuppressionAvertissement() {
-      if (bouton1.style.display === 'inline-block' && bouton2.style.display === 'inline-block') {
-        if (avertissement) {
-          avertissement.style.display = 'none';
-        }
-      }
-    }
-
-    // Afficher le bouton 1 si déjà révélé ou délai écoulé, sinon timer
-    if (localStorage.getItem(BOUTON1_KEY) === 'true' || tempsEcoule >= delai1) {
-      bouton1.style.display = 'inline-block';
-      localStorage.setItem(BOUTON1_KEY, 'true');
-      verifierSuppressionAvertissement();
-    } else {
-      setTimeout(() => {
-        bouton1.style.display = 'inline-block';
-        localStorage.setItem(BOUTON1_KEY, 'true');
-        verifierSuppressionAvertissement();
-      }, delai1 - tempsEcoule);
-    }
-
-    // Afficher le bouton 2 si déjà révélé ou délai écoulé, sinon timer
-    if (localStorage.getItem(BOUTON2_KEY) === 'true' || tempsEcoule >= delai2) {
-      bouton2.style.display = 'inline-block';
-      localStorage.setItem(BOUTON2_KEY, 'true');
-      verifierSuppressionAvertissement();
-    } else {
-      setTimeout(() => {
-        bouton2.style.display = 'inline-block';
-        localStorage.setItem(BOUTON2_KEY, 'true');
-        verifierSuppressionAvertissement();
-      }, delai2 - tempsEcoule);
-    }
-
-    // Afficher les sections liées à la connexion
-    document.getElementById('reveal-button-container').style.display = 'block';
-    document.getElementById('login-container').style.display = 'none';
-    document.getElementById('content').style.display = 'block';
-    document.getElementById('logout-bar').style.display = 'block';
-  }
     
       document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -450,6 +386,74 @@ html, body {
           error.style.display = 'block';
         }
       });
+
+     document.addEventListener('DOMContentLoaded', function () {
+  const BOUTON1_KEY = 'boutonRevele';
+  const BOUTON2_KEY = 'secondBoutonRevele';
+  const ARRIVEE_KEY = 'heureArrivee';
+
+  if (localStorage.getItem('enqueteurConnecte') === 'true') {
+    const bouton1 = document.getElementById('reveal-button');
+    const bouton2 = document.getElementById('second-button');
+    const avertissement = document.getElementById('avertissement');
+
+    // Récupérer ou initialiser l'heure d'arrivée
+    let heureArrivee = localStorage.getItem(ARRIVEE_KEY);
+    if (!heureArrivee) {
+      heureArrivee = Date.now().toString();
+      localStorage.setItem(ARRIVEE_KEY, heureArrivee);
+    }
+
+    const now = Date.now();
+    const tempsEcoule = now - parseInt(heureArrivee, 10);
+
+    const delai1 = 10 * 60 * 1000; // 10 minutes en ms
+    const delai2 = 20 * 60 * 1000; // 20 minutes en ms
+
+    // Fonction pour cacher l'avertissement si les deux boutons sont visibles
+    function verifierSuppressionAvertissement() {
+      if (bouton1.style.display === 'inline-block' && bouton2.style.display === 'inline-block') {
+        if (avertissement) {
+          avertissement.style.display = 'none';
+        }
+      }
+    }
+
+    // Affichage bouton 1 ou temporisation
+    if (localStorage.getItem(BOUTON1_KEY) === 'true' || tempsEcoule >= delai1) {
+      bouton1.style.display = 'inline-block';
+      localStorage.setItem(BOUTON1_KEY, 'true');
+      verifierSuppressionAvertissement();
+    } else {
+      bouton1.style.display = 'none';
+      setTimeout(() => {
+        bouton1.style.display = 'inline-block';
+        localStorage.setItem(BOUTON1_KEY, 'true');
+        verifierSuppressionAvertissement();
+      }, delai1 - tempsEcoule);
+    }
+
+    // Affichage bouton 2 ou temporisation
+    if (localStorage.getItem(BOUTON2_KEY) === 'true' || tempsEcoule >= delai2) {
+      bouton2.style.display = 'inline-block';
+      localStorage.setItem(BOUTON2_KEY, 'true');
+      verifierSuppressionAvertissement();
+    } else {
+      bouton2.style.display = 'none';
+      setTimeout(() => {
+        bouton2.style.display = 'inline-block';
+        localStorage.setItem(BOUTON2_KEY, 'true');
+        verifierSuppressionAvertissement();
+      }, delai2 - tempsEcoule);
+    }
+
+    // Affichage des sections liées à la connexion
+    document.getElementById('reveal-button-container').style.display = 'block';
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    document.getElementById('logout-bar').style.display = 'block';
+  }
+});
 
       document.getElementById('logout-button').addEventListener('click', () => {
         document.getElementById('logout-modal').style.display = 'flex';
