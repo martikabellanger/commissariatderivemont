@@ -137,6 +137,7 @@
 </div>
 
   <script>
+    document.addEventListener('DOMContentLoaded', function() {
     // Vérifier si l'utilisateur est déjà connecté
     if (localStorage.getItem('enqueteurConnecte') === 'true') {
       document.getElementById('login-container').style.display = 'none';
@@ -182,6 +183,7 @@
     localStorage.removeItem('enqueteurConnecte');
     location.reload(); // recharge la page → retour au formulaire
   });
+});
   </script>
 
 <!-- Modal de confirmation de déconnexion -->
