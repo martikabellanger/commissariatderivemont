@@ -305,6 +305,16 @@ html, body {
       </div>
     </div>
 
+    <div id="avertissement" style="
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+">
+  ⚠️ Attention. Revenez régulièrement sur cette page sans vous déconnecter, de nouveaux éléments pourraient apparaître.
+</div>
+
     <!-- Bouton demande analyse -->
     <div id="reveal-button-container">
   <a href="demande-analyse.html" id="reveal-button" style="
@@ -366,6 +376,7 @@ html, body {
   const boutonContainer = document.getElementById('reveal-button-container');
   const bouton1 = document.getElementById('reveal-button');
   const bouton2 = document.getElementById('second-button');
+  const avertissement = document.getElementById('avertissement');
 
   const heureArrivee = localStorage.getItem(ARRIVEE_KEY) || now.toString();
   localStorage.setItem(ARRIVEE_KEY, heureArrivee);
@@ -385,6 +396,7 @@ html, body {
       setTimeout(() => {
         bouton1.style.display = 'inline-block';
         localStorage.setItem(BOUTON_KEY, 'true');
+        verifierSuppressionAvertissement();
       }, restant1);
     }
   }
@@ -403,13 +415,24 @@ html, body {
       setTimeout(() => {
         bouton2.style.display = 'inline-block';
         localStorage.setItem(BOUTON2_KEY, 'true');
+        verifierSuppressionAvertissement();
       }, restant2);
     }
   }
 
-  // Affiche le conteneur une fois qu'au moins un bouton est visible
-  boutonContainer.style.display = 'block';
+  // Vérifie si les deux boutons sont apparus → supprimer l'avertissement
+  function verifierSuppressionAvertissement() {
+    if (localStorage.getItem(BOUTON_KEY) === 'true' && localStorage.getItem(BOUTON2_KEY) === 'true') {
+      if (avertissement) {
+        avertissement.style.display = 'none';
+      }
+    }
+  }
 
+  // Appel initial au chargement
+  verifierSuppressionAvertissement();
+
+  boutonContainer.style.display = 'block';
   document.getElementById('login-container').style.display = 'none';
   document.getElementById('content').style.display = 'block';
   document.getElementById('logout-bar').style.display = 'block';
