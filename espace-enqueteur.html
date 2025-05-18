@@ -373,24 +373,24 @@ html, body {
   const ARRIVEE_KEY = 'heureArrivee';
 
   if (localStorage.getItem('enqueteurConnecte') === 'true') {
-    const now = Date.now();
     const bouton1 = document.getElementById('reveal-button');
     const bouton2 = document.getElementById('second-button');
     const avertissement = document.getElementById('avertissement');
 
     let heureArrivee = localStorage.getItem(ARRIVEE_KEY);
-if (!heureArrivee) {
-  heureArrivee = now.toString();
-  localStorage.setItem(ARRIVEE_KEY, heureArrivee);
-}
-const tempsEcoule = now - parseInt(heureArrivee, 10);
+    if (!heureArrivee) {
+      heureArrivee = Date.now().toString();
+      localStorage.setItem(ARRIVEE_KEY, heureArrivee);
+    }
+
+    const now = Date.now(); // décalé ici, APRES la création éventuelle de heureArrivee
+    const tempsEcoule = now - parseInt(heureArrivee, 10);
 
     const delai1 = 10 * 60 * 1000;
     const delai2 = 20 * 60 * 1000;
     const restant1 = delai1 - tempsEcoule;
     const restant2 = delai2 - tempsEcoule;
 
-    // Fonction centrale pour vérifier si les deux boutons sont affichés
     function verifierSuppressionAvertissement() {
       const bouton1Visible = bouton1.style.display === 'inline-block';
       const bouton2Visible = bouton2.style.display === 'inline-block';
@@ -400,7 +400,10 @@ const tempsEcoule = now - parseInt(heureArrivee, 10);
     }
 
     // Bouton 1
-    if (localStorage.getItem(BOUTON_KEY) === 'true' || restant1 <= 0) {
+    if (localStorage.getItem(BOUTON_KEY) === 'true') {
+      bouton1.style.display = 'inline-block';
+      verifierSuppressionAvertissement();
+    } else if (restant1 <= 0) {
       bouton1.style.display = 'inline-block';
       localStorage.setItem(BOUTON_KEY, 'true');
       verifierSuppressionAvertissement();
@@ -413,7 +416,10 @@ const tempsEcoule = now - parseInt(heureArrivee, 10);
     }
 
     // Bouton 2
-    if (localStorage.getItem(BOUTON2_KEY) === 'true' || restant2 <= 0) {
+    if (localStorage.getItem(BOUTON2_KEY) === 'true') {
+      bouton2.style.display = 'inline-block';
+      verifierSuppressionAvertissement();
+    } else if (restant2 <= 0) {
       bouton2.style.display = 'inline-block';
       localStorage.setItem(BOUTON2_KEY, 'true');
       verifierSuppressionAvertissement();
@@ -425,13 +431,13 @@ const tempsEcoule = now - parseInt(heureArrivee, 10);
       }, restant2);
     }
 
-    // Mise à jour des autres éléments
+    // Affichage des éléments de la page
     document.getElementById('reveal-button-container').style.display = 'block';
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('content').style.display = 'block';
     document.getElementById('logout-bar').style.display = 'block';
   }
-
+});
       document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault();
         const email = document.getElementById('email').value.trim();
