@@ -367,27 +367,8 @@ html, body {
 
   <!-- Script -->
   <script>
-    
-      document.getElementById('login-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const email = document.getElementById('email').value.trim();
-        const code = document.getElementById('code').value.trim();
-        const consent = document.getElementById('consentement').checked;
-        const error = document.getElementById('error');
 
-        if (email && code === 'ASV6780104892' && consent) {
-          localStorage.setItem('enqueteurConnecte', 'true');
-          localStorage.setItem('heureArrivee', Date.now().toString());
-          document.getElementById('login-container').style.display = 'none';
-          document.getElementById('content').style.display = 'block';
-          document.getElementById('logout-bar').style.display = 'block';
-          error.style.display = 'none';
-        } else {
-          error.style.display = 'block';
-        }
-      });
-
-     document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
   const BOUTON1_KEY = 'boutonRevele';
   const BOUTON2_KEY = 'secondBoutonRevele';
   const ARRIVEE_KEY = 'heureArrivee';
@@ -453,7 +434,26 @@ html, body {
     document.getElementById('content').style.display = 'block';
     document.getElementById('logout-bar').style.display = 'block';
   }
-});
+
+    
+      document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const code = document.getElementById('code').value.trim();
+        const consent = document.getElementById('consentement').checked;
+        const error = document.getElementById('error');
+
+        if (email && code === 'ASV6780104892' && consent) {
+          localStorage.setItem('enqueteurConnecte', 'true');
+          localStorage.setItem('heureArrivee', Date.now().toString());
+          document.getElementById('login-container').style.display = 'none';
+          document.getElementById('content').style.display = 'block';
+          document.getElementById('logout-bar').style.display = 'block';
+          error.style.display = 'none';
+        } else {
+          error.style.display = 'block';
+        }
+      });
 
       document.getElementById('logout-button').addEventListener('click', () => {
         document.getElementById('logout-modal').style.display = 'flex';
