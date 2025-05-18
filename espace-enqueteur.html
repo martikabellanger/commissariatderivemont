@@ -151,6 +151,17 @@
       text-decoration: underline;
     }
 
+/* Important : appliquer ça globalement */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .blocs-container {
@@ -159,34 +170,39 @@
 
   .bloc {
     padding: 24px;
+    margin: 0; /* Supprime tout espace parasite */
   }
 }
 
 @media (max-width: 768px) {
   .blocs-container {
-    padding: 0 6px; /* marges blanches très fines */
+    padding: 0 6px;
   }
 
   .row {
     flex-direction: column;
     gap: 20px;
-    align-items: center;
+    align-items: stretch; /* étend chaque bloc sur la largeur dispo */
   }
 
   .bloc {
     width: 100%;
     max-width: 100%;
     padding: 16px;
+    margin: 0;
   }
 }
 
 @media (max-width: 480px) {
   .blocs-container {
-    padding: 0 4px;
+    padding: 0 2px;
   }
 
   .bloc {
+    width: 100%;
+    max-width: 100%;
     padding: 12px;
+    margin: 0;
   }
 }
     #reveal-button-container {
