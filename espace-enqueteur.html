@@ -137,7 +137,7 @@
   <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px;">
 
     <!-- Bloc gauche BLEU CIEL -->
-    <div style="flex: 1 1 300px; min-width: 280px; background-color: #e0f2fa; padding: 20px; border-radius: 10px;">
+    <div class="bloc bleu">
       <h3 style="color: #003366; font-size: 20px; margin-bottom: 20px; text-align: center;">Liste de tâches</h3>
       <ul style="list-style-type: disc; padding-left: 20px; color: #003366; font-size: 14px; line-height: 1.6;">
         <li>Consulter la totalité des documents</li>
@@ -152,7 +152,7 @@
     </div>
 
     <!-- Bloc droit BLEU CIEL -->
-    <div style="flex: 1 1 300px; min-width: 280px; background-color: #e0f2fa; padding: 20px; border-radius: 10px;">
+    <div class="bloc bleu">
       <h3 style="color: #003366; font-size: 20px; margin-bottom: 20px; text-align: center;">Documents</h3>
       <ul style="list-style-type: disc; padding-left: 20px; color: #003366; font-size: 14px; line-height: 1.8;">
         <li><a href="Téléphone_Portable_S.Vanterin.jpg" target="_blank" style="color: #003366; text-decoration: underline;">ServiceInformatique/Téléphone_Portable_S.Vanterin</a></li>
@@ -236,4 +236,31 @@
 </div>
   
 </body>
+
+
+
+<style>
+  .bloc-bleu {
+    background-color: #e0f2fa;
+    border-radius: 10px;
+    padding: 80px;
+    color: #003366;
+  }
+
+  /* Tablettes */
+  @media (max-width: 1024px) {
+    .bloc-bleu {
+      padding: 40px;
+    }
+  }
+
+  /* Mobiles */
+  @media (max-width: 600px) {
+    .bloc-bleu {
+      padding: 20px;
+    }
+  }
+</style>
+
+  
 </html>
