@@ -157,7 +157,7 @@ header h1 {
   .services-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 20px;
      width: 100%; /* s’assurer que la grille fait 100% du conteneur */
     max-width: 100%; /* ne pas dépasser */
     box-sizing: border-box;
