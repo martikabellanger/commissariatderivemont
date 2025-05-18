@@ -256,19 +256,34 @@
 
     <!-- Bouton demande analyse -->
     <div id="reveal-button-container">
-      <a href="demande-analyse.html" id="reveal-button" style="
-        background-color: #003366;
-        color: white;
-        padding: 16px 24px;
-        font-size: 16px;
-        border: none;
-        border-radius: 6px;
-        text-decoration: none;
-        display: inline-block;
-        transition: background-color 0.3s ease;">
-        Faire une demande d’analyse
-      </a>
-    </div>
+  <a href="demande-analyse.html" id="reveal-button" style="
+    background-color: #003366;
+    color: white;
+    padding: 16px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;">
+    Faire une demande d’analyse
+  </a>
+
+  <br /><br />
+
+  <a href="interrogatoires2.html" id="second-button" style="
+    background-color: #003366;
+    color: white;
+    padding: 16px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    display: none;
+    transition: background-color 0.3s ease;">
+    Écouter les interrogatoires n°2
+  </a>
+</div>
   </div>
 
   <!-- Bouton déconnexion dans le footer -->
@@ -296,37 +311,58 @@
       const ARRIVEE_KEY = 'heureArrivee';
 
       if (localStorage.getItem('enqueteurConnecte') === 'true') {
-        const bouton = document.getElementById('reveal-button-container');
-        const now = Date.now();
+  const now = Date.now();
+  const boutonContainer = document.getElementById('reveal-button-container');
+  const bouton1 = document.getElementById('reveal-button');
+  const bouton2 = document.getElementById('second-button');
 
-        if (localStorage.getItem(BOUTON_KEY) === 'true') {
-          bouton.style.display = 'block';
-        } else {
-          let heureArrivee = localStorage.getItem(ARRIVEE_KEY);
-          if (!heureArrivee) {
-            localStorage.setItem(ARRIVEE_KEY, now.toString());
-            heureArrivee = now;
-          }
+  const heureArrivee = localStorage.getItem(ARRIVEE_KEY) || now.toString();
+  localStorage.setItem(ARRIVEE_KEY, heureArrivee);
 
-          const tempsEcoule = now - parseInt(heureArrivee, 10);
-          const delai = 10 * 60 * 1000;
-          const tempsRestant = delai - tempsEcoule;
+  const tempsEcoule = now - parseInt(heureArrivee, 10);
 
-          if (tempsRestant <= 0) {
-            bouton.style.display = 'block';
-            localStorage.setItem(BOUTON_KEY, 'true');
-          } else {
-            setTimeout(() => {
-              bouton.style.display = 'block';
-              localStorage.setItem(BOUTON_KEY, 'true');
-            }, tempsRestant);
-          }
-        }
+  // Gestion du bouton 1 (10 minutes)
+  if (localStorage.getItem(BOUTON_KEY) === 'true') {
+    bouton1.style.display = 'inline-block';
+  } else {
+    const delai1 = 10 * 60 * 1000;
+    const restant1 = delai1 - tempsEcoule;
+    if (restant1 <= 0) {
+      bouton1.style.display = 'inline-block';
+      localStorage.setItem(BOUTON_KEY, 'true');
+    } else {
+      setTimeout(() => {
+        bouton1.style.display = 'inline-block';
+        localStorage.setItem(BOUTON_KEY, 'true');
+      }, restant1);
+    }
+  }
 
-        document.getElementById('login-container').style.display = 'none';
-        document.getElementById('content').style.display = 'block';
-        document.getElementById('logout-bar').style.display = 'block';
-      }
+  // Gestion du bouton 2 (20 minutes)
+  const BOUTON2_KEY = 'secondBoutonRevele';
+  if (localStorage.getItem(BOUTON2_KEY) === 'true') {
+    bouton2.style.display = 'inline-block';
+  } else {
+    const delai2 = 20 * 60 * 1000;
+    const restant2 = delai2 - tempsEcoule;
+    if (restant2 <= 0) {
+      bouton2.style.display = 'inline-block';
+      localStorage.setItem(BOUTON2_KEY, 'true');
+    } else {
+      setTimeout(() => {
+        bouton2.style.display = 'inline-block';
+        localStorage.setItem(BOUTON2_KEY, 'true');
+      }, restant2);
+    }
+  }
+
+  // Affiche le conteneur une fois qu'au moins un bouton est visible
+  boutonContainer.style.display = 'block';
+
+  document.getElementById('login-container').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+  document.getElementById('logout-bar').style.display = 'block';
+}
 
       document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault();
