@@ -367,31 +367,35 @@ html, body {
 
   <!-- Script -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const BOUTON_KEY = 'boutonRevele';
-      const ARRIVEE_KEY = 'heureArrivee';
+  document.addEventListener('DOMContentLoaded', function () {
+  const BOUTON_KEY = 'boutonRevele';
+  const BOUTON2_KEY = 'secondBoutonRevele';
+  const ARRIVEE_KEY = 'heureArrivee';
 
-      if (localStorage.getItem('enqueteurConnecte') === 'true') {
-  const now = Date.now();
-  const boutonContainer = document.getElementById('reveal-button-container');
-  const bouton1 = document.getElementById('reveal-button');
-  const bouton2 = document.getElementById('second-button');
-  const avertissement = document.getElementById('avertissement');
+  if (localStorage.getItem('enqueteurConnecte') === 'true') {
+    const now = Date.now();
+    const boutonContainer = document.getElementById('reveal-button-container');
+    const bouton1 = document.getElementById('reveal-button');
+    const bouton2 = document.getElementById('second-button');
+    const avertissement = document.getElementById('avertissement');
 
-  const heureArrivee = localStorage.getItem(ARRIVEE_KEY) || now.toString();
-  localStorage.setItem(ARRIVEE_KEY, heureArrivee);
+    const heureArrivee = localStorage.getItem(ARRIVEE_KEY) || now.toString();
+    localStorage.setItem(ARRIVEE_KEY, heureArrivee);
 
-  const tempsEcoule = now - parseInt(heureArrivee, 10);
+    const tempsEcoule = now - parseInt(heureArrivee, 10);
 
-  // Gestion du bouton 1 (10 minutes)
-  if (localStorage.getItem(BOUTON_KEY) === 'true') {
-    bouton1.style.display = 'inline-block';
-  } else {
+    // Affichage immédiat si délai écoulé ou si déjà enregistré
+    let bouton1Affiche = false;
+    let bouton2Affiche = false;
+
+    // Bouton 1
     const delai1 = 10 * 60 * 1000;
     const restant1 = delai1 - tempsEcoule;
-    if (restant1 <= 0) {
+
+    if (localStorage.getItem(BOUTON_KEY) === 'true' || restant1 <= 0) {
       bouton1.style.display = 'inline-block';
       localStorage.setItem(BOUTON_KEY, 'true');
+      bouton1Affiche = true;
     } else {
       setTimeout(() => {
         bouton1.style.display = 'inline-block';
@@ -399,18 +403,15 @@ html, body {
         verifierSuppressionAvertissement();
       }, restant1);
     }
-  }
 
-  // Gestion du bouton 2 (20 minutes)
-  const BOUTON2_KEY = 'secondBoutonRevele';
-  if (localStorage.getItem(BOUTON2_KEY) === 'true') {
-    bouton2.style.display = 'inline-block';
-  } else {
+    // Bouton 2
     const delai2 = 20 * 60 * 1000;
     const restant2 = delai2 - tempsEcoule;
-    if (restant2 <= 0) {
+
+    if (localStorage.getItem(BOUTON2_KEY) === 'true' || restant2 <= 0) {
       bouton2.style.display = 'inline-block';
       localStorage.setItem(BOUTON2_KEY, 'true');
+      bouton2Affiche = true;
     } else {
       setTimeout(() => {
         bouton2.style.display = 'inline-block';
@@ -418,25 +419,29 @@ html, body {
         verifierSuppressionAvertissement();
       }, restant2);
     }
-  }
 
-  // Vérifie si les deux boutons sont apparus → supprimer l'avertissement
-  function verifierSuppressionAvertissement() {
-    if (localStorage.getItem(BOUTON_KEY) === 'true' && localStorage.getItem(BOUTON2_KEY) === 'true') {
-      if (avertissement) {
-        avertissement.style.display = 'none';
+    // Fonction pour supprimer l'avertissement si les deux boutons sont là
+    function verifierSuppressionAvertissement() {
+      if (
+        localStorage.getItem(BOUTON_KEY) === 'true' &&
+        localStorage.getItem(BOUTON2_KEY) === 'true'
+      ) {
+        if (avertissement) {
+          avertissement.style.display = 'none';
+        }
       }
     }
+
+    // Vérification immédiate après affichage (utile après reload)
+    if (bouton1Affiche && bouton2Affiche) {
+      verifierSuppressionAvertissement();
+    }
+
+    boutonContainer.style.display = 'block';
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    document.getElementById('logout-bar').style.display = 'block';
   }
-
-  // Appel initial au chargement
-  verifierSuppressionAvertissement();
-
-  boutonContainer.style.display = 'block';
-  document.getElementById('login-container').style.display = 'none';
-  document.getElementById('content').style.display = 'block';
-  document.getElementById('logout-bar').style.display = 'block';
-}
 
       document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault();
