@@ -7,6 +7,13 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: white;
+      color: #003366;
+    }
+
     .warning-text {
       font-size: 16px;
       font-weight: 400;
@@ -93,6 +100,73 @@
       padding: 40px;
       text-align: center;
     }
+
+    /* Bloc contenant les deux colonnes */
+    .blocs-container {
+      background-color: white;
+      padding: 40px 80px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .bloc {
+      background-color: #e0f2fa;
+      border-radius: 12px;
+      flex: 1 1 45%;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    .bloc h3 {
+      text-align: center;
+      margin-top: 0;
+      font-size: 20px;
+      color: #003366;
+    }
+
+    .bloc ul {
+      list-style-type: disc;
+      padding-left: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #003366;
+    }
+
+    .bloc a {
+      color: #003366;
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .blocs-container {
+        padding: 30px 40px;
+      }
+      .bloc {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .blocs-container {
+        padding: 20px;
+      }
+      .row {
+        flex-direction: column;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .bloc {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -113,154 +187,108 @@
     <form id="login-form">
       <label for="email">Adresse e-mail</label>
       <input type="email" id="email" name="email" required />
-
       <label for="code">Code enquêteur</label>
       <input type="text" id="code" name="code" required />
-
       <div class="checkbox-label">
         <input type="checkbox" id="consentement" />
         <label for="consentement">J'accepte d'être contacté dans le cadre de l'enquête</label>
       </div>
-
       <button type="submit">Connexion</button>
     </form>
   </div>
 
   <!-- CONTENU RÉSERVÉ -->
- <!-- TITRE -->
-<div style="background-color: white; padding: 40px 20px; text-align: center;">
-  <h2 style="color: #003366; font-size: 28px; margin: 0;">Bienvenue dans votre espace enquêteur</h2>
-</div>
-
-<!-- CONTAINER DES BLOCS AVEC MARGE GÉNÉRALE -->
-<div style="background-color: white; padding: 0px 80px;">
-  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px;">
-
-    <!-- Bloc gauche BLEU CIEL -->
-    <div class="bloc bleu">
-      <h3 style="color: #003366; font-size: 20px; margin-bottom: 20px; text-align: center;">Liste de tâches</h3>
-      <ul style="list-style-type: disc; padding-left: 20px; color: #003366; font-size: 14px; line-height: 1.6;">
-        <li>Consulter la totalité des documents</li>
-        <li>Obtenir le rapport d'autopsie</li>
-        <li>Associer les messages à leurs propriétaires</li>
-        <li>Découvrir le mobile et l'alibi de chaque suspect</li>
-        <li>Associer chaque numéro de téléphone à son propriétaire</li>
-        <li>Comprendre les emplacements des suspects au moment des faits</li>
-        <li>Découvrir les antécédents médicaux de Simon</li>
-        <li>Comprendre la cause exacte de la mort de Simon</li>
-      </ul>
-    </div>
-
-    <!-- Bloc droit BLEU CIEL -->
-    <div class="bloc bleu">
-      <h3 style="color: #003366; font-size: 20px; margin-bottom: 20px; text-align: center;">Documents</h3>
-      <ul style="list-style-type: disc; padding-left: 20px; color: #003366; font-size: 14px; line-height: 1.8;">
-        <li><a href="Téléphone_Portable_S.Vanterin.jpg" target="_blank" style="color: #003366; text-decoration: underline;">ServiceInformatique/Téléphone_Portable_S.Vanterin</a></li>
-        <li><a href="Sonaria_Musique_S.Vanterin.jpg" target="_blank" style="color: #003366; text-decoration: underline;">ServiceInformatique/Sonaria_Musique_S.Vanterin</a></li>
-        <li><a href="Mails_S.Vanterin.jpg" target="_blank" style="color: #003366; text-decoration: underline;">ServiceInformatique/Mails_S.Vanterin</a></li>
-        <li><a href="Messages_S.Vanterin.jpg" target="_blank" style="color: #003366; text-decoration: underline;">ServiceInformatique/Messages_S.Vanterin</a></li>
-        <li><a href="Reçu_Makey_S.Vanterin.jpg" target="_blank" style="color: #003366; text-decoration: underline;">ServiceInformatique/Reçu_Makey_S.Vanterin</a></li>
-      </ul>
-    </div>
-
+  <div style="background-color: white; padding: 40px 20px; text-align: center;">
+    <h2 style="color: #003366; font-size: 28px; margin: 0;">Bienvenue dans votre espace enquêteur</h2>
   </div>
-</div>
 
-</div>
-  <!-- Bouton de déconnexion -->
-<div id="logout-bar" style="display: none; text-align: right; padding: 20px;">
-  <button id="logout-button" style="padding: 10px 16px; font-size: 14px; background-color: #eee; color: #003366; border: none; border-radius: 4px; cursor: pointer;">Déconnexion</button>
-</div>
+  <!-- BLOCS -->
+  <div class="blocs-container">
+    <div class="row">
+      <div class="bloc">
+        <h3>Liste de tâches</h3>
+        <ul>
+          <li>Consulter la totalité des documents</li>
+          <li>Obtenir le rapport d'autopsie</li>
+          <li>Associer les messages à leurs propriétaires</li>
+          <li>Découvrir le mobile et l'alibi de chaque suspect</li>
+          <li>Associer chaque numéro de téléphone à son propriétaire</li>
+          <li>Comprendre les emplacements des suspects au moment des faits</li>
+          <li>Découvrir les antécédents médicaux de Simon</li>
+          <li>Comprendre la cause exacte de la mort de Simon</li>
+        </ul>
+      </div>
+      <div class="bloc">
+        <h3>Documents</h3>
+        <ul>
+          <li><a href="Téléphone_Portable_S.Vanterin.jpg" target="_blank">ServiceInformatique/Téléphone_Portable_S.Vanterin</a></li>
+          <li><a href="Sonaria_Musique_S.Vanterin.jpg" target="_blank">ServiceInformatique/Sonaria_Musique_S.Vanterin</a></li>
+          <li><a href="Mails_S.Vanterin.jpg" target="_blank">ServiceInformatique/Mails_S.Vanterin</a></li>
+          <li><a href="Messages_S.Vanterin.jpg" target="_blank">ServiceInformatique/Messages_S.Vanterin</a></li>
+          <li><a href="Reçu_Makey_S.Vanterin.jpg" target="_blank">ServiceInformatique/Reçu_Makey_S.Vanterin</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
+  <!-- Bouton déconnexion -->
+  <div id="logout-bar" style="display: none; text-align: right; padding: 20px;">
+    <button id="logout-button" style="padding: 10px 16px; font-size: 14px; background-color: #eee; color: #003366; border: none; border-radius: 4px; cursor: pointer;">Déconnexion</button>
+  </div>
+
+  <!-- Modal de déconnexion -->
+  <div id="logout-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.5); z-index:999; justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:8px; max-width:500px; width:90%; text-align:center;">
+      <p style="font-size:16px; color:#003366; margin-bottom:30px;">
+        Attention : vous allez être déconnecté de l'espace enquêteur.<br />
+        En cas de reconnexion avec la même adresse e-mail, vous recevrez à nouveau les e-mails des experts contenant les informations nécessaires à l'enquête.<br /><br />
+        Êtes-vous sûr de vouloir poursuivre ?
+      </p>
+      <button id="stay-connected" style="padding:10px 16px; margin-right:10px; background-color:#ddd; border:none; border-radius:4px; cursor:pointer;">Rester connecté</button>
+      <button id="confirm-logout" style="padding:10px 16px; background-color:#6ec1e4; color:#003366; border:none; border-radius:4px; cursor:pointer;">Se déconnecter</button>
+    </div>
+  </div>
+
+  <!-- Script -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-    // Vérifier si l'utilisateur est déjà connecté
-    if (localStorage.getItem('enqueteurConnecte') === 'true') {
-      document.getElementById('login-container').style.display = 'none';
-      document.getElementById('content').style.display = 'block';
-      document.getElementById('logout-bar').style.display = 'block';
-    }
-
-    document.getElementById('login-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      const email = document.getElementById('email').value.trim();
-      const code = document.getElementById('code').value.trim();
-      const consent = document.getElementById('consentement').checked;
-      const error = document.getElementById('error');
-
-      if (email && code === 'ASV6780104892' && consent) {
-        // Connexion réussie → enregistrer l'état
-        localStorage.setItem('enqueteurConnecte', 'true');
+      if (localStorage.getItem('enqueteurConnecte') === 'true') {
         document.getElementById('login-container').style.display = 'none';
         document.getElementById('content').style.display = 'block';
         document.getElementById('logout-bar').style.display = 'block';
-        error.style.display = 'none';
-      } else {
-        error.style.display = 'block';
       }
+
+      document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const code = document.getElementById('code').value.trim();
+        const consent = document.getElementById('consentement').checked;
+        const error = document.getElementById('error');
+
+        if (email && code === 'ASV6780104892' && consent) {
+          localStorage.setItem('enqueteurConnecte', 'true');
+          document.getElementById('login-container').style.display = 'none';
+          document.getElementById('content').style.display = 'block';
+          document.getElementById('logout-bar').style.display = 'block';
+          error.style.display = 'none';
+        } else {
+          error.style.display = 'block';
+        }
+      });
+
+      document.getElementById('logout-button').addEventListener('click', () => {
+        document.getElementById('logout-modal').style.display = 'flex';
+      });
+
+      document.getElementById('stay-connected').addEventListener('click', () => {
+        document.getElementById('logout-modal').style.display = 'none';
+      });
+
+      document.getElementById('confirm-logout').addEventListener('click', () => {
+        localStorage.removeItem('enqueteurConnecte');
+        location.reload();
+      });
     });
-
-    // Gestion de la déconnexion
-  const logoutButton = document.getElementById('logout-button');
-  const logoutModal = document.getElementById('logout-modal');
-  const stayConnected = document.getElementById('stay-connected');
-  const confirmLogout = document.getElementById('confirm-logout');
-
-  logoutButton.addEventListener('click', () => {
-    logoutModal.style.display = 'flex';
-  });
-
-  stayConnected.addEventListener('click', () => {
-    logoutModal.style.display = 'none';
-  });
-
-  confirmLogout.addEventListener('click', () => {
-    localStorage.removeItem('enqueteurConnecte');
-    location.reload(); // recharge la page → retour au formulaire
-  });
-});
   </script>
-
-<!-- Modal de confirmation de déconnexion -->
-<div id="logout-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.5); z-index:999; justify-content:center; align-items:center;">
-  <div style="background:white; padding:30px; border-radius:8px; max-width:500px; width:90%; text-align:center;">
-    <p style="font-size:16px; color:#003366; margin-bottom:30px;">
-      Attention : vous allez être déconnecté de l'espace enquêteur.<br />
-      En cas de reconnexion avec la même adresse e-mail, vous recevrez à nouveau les e-mails des experts contenant les informations nécessaires à l'enquête.<br /><br />
-      Êtes-vous sûr de vouloir poursuivre ?
-    </p>
-    <button id="stay-connected" style="padding:10px 16px; margin-right:10px; background-color:#ddd; border:none; border-radius:4px; cursor:pointer;">Rester connecté</button>
-    <button id="confirm-logout" style="padding:10px 16px; background-color:#6ec1e4; color:#003366; border:none; border-radius:4px; cursor:pointer;">Se déconnecter</button>
-  </div>
-</div>
-  
 </body>
-
-
-
-<style>
-  .bloc-bleu {
-    background-color: #e0f2fa;
-    border-radius: 10px;
-    padding: 80px;
-    color: #003366;
-  }
-
-  /* Tablettes */
-  @media (max-width: 1024px) {
-    .bloc-bleu {
-      padding: 40px;
-    }
-  }
-
-  /* Mobiles */
-  @media (max-width: 600px) {
-    .bloc-bleu {
-      padding: 20px;
-    }
-  }
-</style>
-
-  
 </html>
