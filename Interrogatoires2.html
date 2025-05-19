@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Interrogatoires 2</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .grille {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .case {
+      border: 1px solid #ccc;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .case img {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px;
+    }
+
+    .case button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn-bleu {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .progress-container {
+      margin-top: 10px;
+      display: none;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 20px;
+      background-color: #007BFF;
+      transition: width 0.3s;
+    }
+
+    .progress-wrapper {
+      width: 100%;
+      background-color: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    video {
+      margin-top: 15px;
+      width: 100%;
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Interrogatoires complémentaires</header>
+
+  <div class="grille">
+    <!-- Cases 1 à 7 -->
+    <div class="case">
+      <img src="Anna.jpg" alt="Anna">
+      <audio controls src="Interrogatoire Anna.mp3"></audio>
+    </div>
+    <div class="case">
+      <img src="Victor.jpg" alt="Victor">
+      <audio controls src="Interrogatoire Victor.mp3"></audio>
+    </div>
+    <div class="case">
+      <img src="Rebecca.jpg" alt="Rebecca">
+      <audio controls src="Interrogatoire Rebecca.mp3"></audio>
+    </div>
+    <div class="case">
+      <img src="Max.jpg" alt="Max">
+      <audio controls src="Interrogatoire Max.mp3"></audio>
+    </div>
+    <div class="case">
+      <img src="Jenny.jpg" alt="Jenny">
+      <audio controls src="Interrogatoire Jenny.mp3"></audio>
+    </div>
+    <div class="case">
+      <img src="Barbara.jpg" alt="Barbara">
+      <audio controls src="Interrogatoire Barbara.mp3"></audio>
+    </div>
+    <div class="case">
+      <img src="Frank.jpg" alt="Frank">
+      <audio controls src="Interrogatoire Frank.mp3"></audio>
+    </div>
+
+    <!-- Case 8 -->
+    <div class="case" id="case8">
+      <button class="btn-bleu" id="btn-recuperer">Obtenir l'audio du téléphone de Max Pastorelli</button>
+
+      <div class="progress-container" id="progress-container">
+        <p>Récupération en cours...</p>
+        <div class="progress-wrapper">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+      </div>
+
+      <div id="video-container" style="display: none;">
+        <video id="video" controls>
+          <source src="Enregistrement619.mp4" type="video/mp4">
+          Votre navigateur ne supporte pas la vidéo.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'videoRevelee';
+
+    const btnRecuperer = document.getElementById('btn-recuperer');
+    const progressContainer = document.getElementById('progress-container');
+    const progressBar = document.getElementById('progress-bar');
+    const videoContainer = document.getElementById('video-container');
+
+    function afficherVideo() {
+      progressContainer.style.display = 'none';
+      videoContainer.style.display = 'block';
+      localStorage.setItem(STORAGE_KEY, 'true');
+    }
+
+    // Si la vidéo a déjà été révélée
+    if (localStorage.getItem(STORAGE_KEY) === 'true') {
+      videoContainer.style.display = 'block';
+      btnRecuperer.style.display = 'none';
+    }
+
+    btnRecuperer.addEventListener('click', function () {
+      btnRecuperer.disabled = true;
+      progressContainer.style.display = 'block';
+
+      const dureeChargement = 3 * 60 * 1000; // 3 minutes
+      const interval = 1000;
+      let ecoule = 0;
+
+      const timer = setInterval(() => {
+        ecoule += interval;
+        const pourcentage = Math.min((ecoule / dureeChargement) * 100, 100);
+        progressBar.style.width = pourcentage + '%';
+
+        if (ecoule >= dureeChargement) {
+          clearInterval(timer);
+          afficherVideo();
+        }
+      }, interval);
+    });
+  </script>
+</body>
+</html>
