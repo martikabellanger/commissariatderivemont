@@ -147,94 +147,95 @@
     </div>
   </main>
 
-  <script>
-    const DUREE_ANALYSE_MS = 90000; // 90 secondes
+ <script>
+  const DUREE_ANALYSE_MS = 90000; // 90 secondes
 
-    // Textes résultats
-    const RESULTATS = {
-      gauche: "Aucune anomalie détectée.\nCigarette de la marque Marlboro.\nADN prélevé : Simon Vanterin.",
-      droite: "Anomalie détectée.\nLa Bête Bière blonde de fermentation basse de style Belgian Strong Ale.\nComposition originale :\nIngrédients : EAU, MALT D'ORGE, SIROP DE GLUCOSE, HOUBLONS, EXTRAIT DE HOUBLON. CONTIENT NATURELLEMENT DES SULFITES.\nAllergènes : Gluten, Anhydride sulfureux et sulfites.\n\nRetour prélèvement : La bouteille contient de la bière type La Choulette 9% jus de fraise."
-    };
+  // Textes résultats avec \n pour les retours à la ligne
+  const RESULTATS = {
+    gauche: "Aucune anomalie détectée.\nCigarette de la marque Marlboro.\nADN prélevé : Simon Vanterin.",
+    droite: "Anomalie détectée.\nLa Bête Bière blonde de fermentation basse de style Belgian Strong Ale.\nComposition originale :\nIngrédients : EAU, MALT D'ORGE, SIROP DE GLUCOSE, HOUBLONS, EXTRAIT DE HOUBLON. CONTIENT NATURELLEMENT DES SULFITES.\nAllergènes : Gluten, Anhydride sulfureux et sulfites.\n\nRetour prélèvement : La bouteille contient de la bière type La Choulette 9% jus de fraise."
+  };
 
-    // Sauvegarde / chargement du résultat en localStorage
-    function sauvegarderResultat(cote, texte) {
-      localStorage.setItem('analyse_' + cote, texte);
-    }
-    function chargerResultat(cote) {
-      return localStorage.getItem('analyse_' + cote);
-    }
+  // Sauvegarde / chargement du résultat en localStorage
+  function sauvegarderResultat(cote, texte) {
+    localStorage.setItem('analyse_' + cote, texte);
+  }
 
-    function demarrerAnalyse(cote) {
-      const btn = document.getElementById('btn-' + cote);
-      const barre = document.getElementById('barre-' + cote);
-      const progress = document.getElementById('progress-' + cote);
-      const texteChargement = document.getElementById('texte-chargement-' + cote);
-      const resultat = document.getElementById('resultat-' + cote);
+  function chargerResultat(cote) {
+    return localStorage.getItem('analyse_' + cote);
+  }
 
-      // Désactivation bouton
-      btn.disabled = true;
+  function demarrerAnalyse(cote) {
+    const btn = document.getElementById('btn-' + cote);
+    const barre = document.getElementById('barre-' + cote);
+    const progress = document.getElementById('progress-' + cote);
+    const texteChargement = document.getElementById('texte-chargement-' + cote);
+    const resultat = document.getElementById('resultat-' + cote);
 
-      // Cacher résultat précédent
-      resultat.style.display = 'none';
+    // Désactiver bouton
+    btn.disabled = true;
 
-      // Afficher barre et texte chargement
-      barre.style.display = 'block';
-      texteChargement.style.display = 'block';
+    // Cacher résultat précédent
+    resultat.style.display = 'none';
 
-      let startTime = Date.now();
+    // Afficher barre de chargement
+    barre.style.display = 'block';
+    texteChargement.style.display = 'block';
 
-      // Animation barre de progression avec intervalle 100ms
-      const interval = setInterval(() => {
-        const elapsed = Date.now() - startTime;
-        const progressPercent = Math.min(100, (elapsed / DUREE_ANALYSE_MS) * 100);
-        progress.style.width = progressPercent + '%';
+    const startTime = Date.now();
 
-        if (elapsed >= DUREE_ANALYSE_MS) {
-          clearInterval(interval);
+    // Animation barre de progression
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const progressPercent = Math.min(100, (elapsed / DUREE_ANALYSE_MS) * 100);
+      progress.style.width = progressPercent + '%';
 
-          // Cacher barre et texte chargement
-          barre.style.display = 'none';
-          texteChargement.style.display = 'none';
+      if (elapsed >= DUREE_ANALYSE_MS) {
+        clearInterval(interval);
 
-          // Afficher résultat final
-          resultat.textContent = RESULTATS[cote];
-          resultat.style.display = 'block';
+        // Cacher barre de chargement
+        barre.style.display = 'none';
+        texteChargement.style.display = 'none';
 
-          // Sauvegarder résultat en localStorage
-          sauvegarderResultat(cote);
-        }
-      }, 100);
-    }
+        // Afficher résultat
+        resultat.innerHTML = RESULTATS[cote].replace(/\n/g, '<br>');
+        resultat.style.display = 'block';
 
-    // Au chargement de la page, vérifier si résultats déjà sauvegardés
-    window.addEventListener('DOMContentLoaded', () => {
-      ['gauche', 'droite'].forEach(cote => {
-        const texteSauvegarde = chargerResultat(cote);
-        if (texteSauvegarde) {
-          // Afficher résultat directement, cacher bouton et barre chargement
-          const btn = document.getElementById('btn-' + cote);
-          const barre = document.getElementById('barre-' + cote);
-          const texteChargement = document.getElementById('texte-chargement-' + cote);
-          const resultat = document.getElementById('resultat-' + cote);
+        // Sauvegarder le résultat dans le localStorage
+        sauvegarderResultat(cote, RESULTATS[cote]);
+      }
+    }, 100);
+  }
 
-          btn.disabled = true;
-          btn.style.display = 'none';
-          barre.style.display = 'none';
-          texteChargement.style.display = 'none';
+  // Vérifier au chargement si analyse déjà faite
+  window.addEventListener('DOMContentLoaded', () => {
+    ['gauche', 'droite'].forEach(cote => {
+      const texteSauvegarde = chargerResultat(cote);
+      if (texteSauvegarde) {
+        const btn = document.getElementById('btn-' + cote);
+        const barre = document.getElementById('barre-' + cote);
+        const texteChargement = document.getElementById('texte-chargement-' + cote);
+        const resultat = document.getElementById('resultat-' + cote);
 
-          resultat.textContent = texteSauvegarde;
-          resultat.style.display = 'block';
-        }
-      });
+        btn.disabled = true;
+        btn.style.display = 'none';
+        barre.style.display = 'none';
+        texteChargement.style.display = 'none';
+
+        resultat.innerHTML = texteSauvegarde.replace(/\n/g, '<br>');
+        resultat.style.display = 'block';
+      }
     });
+  });
 
-    // Écouteurs de clic sur boutons
-    document.getElementById('btn-gauche').addEventListener('click', () => {
-      demarrerAnalyse('gauche');
-    });
-    document.getElementById('btn-droite').addEventListener('click', () => {
-      demarrerAnalyse('droite');
-    });
-  </script>
+  // Boutons : lancer analyse
+  document.getElementById('btn-gauche').addEventListener('click', () => {
+    demarrerAnalyse('gauche');
+  });
+
+  document.getElementById('btn-droite').addEventListener('click', () => {
+    demarrerAnalyse('droite');
+  });
+</script>
 </body>
 </html>
