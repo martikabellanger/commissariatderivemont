@@ -401,19 +401,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Affichage bouton 1 ou temporisation
-    if (localStorage.getItem(BOUTON1_KEY) === 'true' || tempsEcoule >= delai1) {
-      bouton1.style.display = 'inline-block';
-      localStorage.setItem(BOUTON1_KEY, 'true');
-      verifierSuppressionAvertissement();
-    } else {
-      bouton1.style.display = 'none';
-      setTimeout(() => {
-        bouton1.style.display = 'inline-block';
-        localStorage.setItem(BOUTON1_KEY, 'true');
-        verifierSuppressionAvertissement();
-      }, delai1 - tempsEcoule);
-    }
-
+if (localStorage.getItem(BOUTON1_KEY) === 'true') {
+  bouton1.style.display = 'inline-block';
+  verifierSuppressionAvertissement();
+} else if (tempsEcoule >= delai1) {
+  bouton1.style.display = 'inline-block';
+  localStorage.setItem(BOUTON1_KEY, 'true');
+  verifierSuppressionAvertissement();
+} else {
+  bouton1.style.display = 'none';
+  setTimeout(() => {
+    bouton1.style.display = 'inline-block';
+    localStorage.setItem(BOUTON1_KEY, 'true');
+    verifierSuppressionAvertissement();
+  }, delai1 - tempsEcoule);
+}
     // Affichage bouton 2 ou temporisation
     if (localStorage.getItem(BOUTON2_KEY) === 'true' || tempsEcoule >= delai2) {
       bouton2.style.display = 'inline-block';
