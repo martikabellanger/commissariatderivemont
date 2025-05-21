@@ -446,6 +446,32 @@ if (localStorage.getItem(BOUTON1_KEY) === 'true') {
         const error = document.getElementById('error');
 
         if (email && code === 'ASV6780104892' && consent) {
+
+// Ajouter le contact à Brevo
+fetch("https://api.brevo.com/v3/contacts", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "api-key": "CLEAPI"
+  },
+  body: JSON.stringify({
+    email: email,
+    listIds: [5], // exemple : [12]
+    updateEnabled: true
+  })
+})
+.then(response => {
+  if (response.ok) {
+    // ici, tu peux déclencher une redirection, ou juste ne rien faire si c’est transparent
+  } else {
+    alert("Une erreur est survenue lors de la connexion.");
+  }
+})
+.catch(error => {
+  alert("Erreur technique. Veuillez réessayer plus tard.");
+});
+
+          
           localStorage.setItem('enqueteurConnecte', 'true');
           localStorage.setItem('heureArrivee', Date.now().toString());
           document.getElementById('login-container').style.display = 'none';
