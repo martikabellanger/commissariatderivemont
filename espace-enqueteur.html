@@ -456,12 +456,15 @@ if (localStorage.getItem(BOUTON1_KEY) === 'true') {
     body: JSON.stringify({ email: email })
   })
   .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    // Afficher le contenu réservé
+.then(data => {
+  console.log(data); // <-- Regarde ici si success: true
+  if (data.success) {
     localStorage.setItem('enqueteurConnecte', 'true');
     localStorage.setItem('heureArrivee', Date.now().toString());
-    location.reload(); // Recharge pour afficher les éléments liés à la connexion
+    location.reload(); // recharge uniquement si succès
+  } else {
+    alert("Erreur Brevo : " + (data.error || "Erreur inconnue"));
+  }
   })
   .catch(error => {
     console.error('Erreur lors de l’envoi du formulaire :', error);
