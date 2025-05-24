@@ -470,7 +470,7 @@ if (localStorage.getItem(BOUTON1_KEY) === 'true') {
 })
   .catch(error => {
     console.error('Erreur lors de l’envoi du formulaire :', error);
-    alert("Une erreur est survenue. Veuillez réessayer plus tard.");
+    alert("Une erreur est survenue. Veuillez réessayer plus tard !!!");
   });
 
           
@@ -500,6 +500,55 @@ if (localStorage.getItem(BOUTON1_KEY) === 'true') {
         location.reload();
       });
     });
+
+
+
+document.getElementById('login-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById('email').value.trim();
+  const code = document.getElementById('code').value.trim();
+  const consent = document.getElementById('consentement').checked;
+  const errorDiv = document.getElementById('error');
+
+  // Validation simple
+  if (!email || !code || !consent) {
+    errorDiv.textContent = "Veuillez remplir tous les champs et accepter le consentement.";
+    errorDiv.style.display = "block";
+    return;
+  }
+
+  // Envoi AJAX vers ton PHP
+  try {
+    const formData = new FormData();
+    formData.append('email', email);
+
+    const response = await fetch('ton_script.php', {  // Remplace 'ton_script.php' par le vrai chemin PHP
+      method: 'POST',
+      body: formData,
+      headers: {
+        // Pas besoin de définir Content-Type ici avec FormData
+      }
+    });
+
+    const text = await response.text();
+
+    if (response.ok) {
+      errorDiv.style.display = "none";
+      alert("Inscription réussie !");
+      // Ici tu peux afficher la partie contenu, cacher le formulaire, etc.
+    } else {
+      errorDiv.textContent = text || "Erreur lors de l'inscription.";
+      errorDiv.style.display = "block";
+    }
+  } catch (err) {
+    errorDiv.textContent = "Erreur réseau : " + err.message;
+    errorDiv.style.display = "block";
+  }
+});
+
+    
+    
   </script>
 </body>
 </html>
