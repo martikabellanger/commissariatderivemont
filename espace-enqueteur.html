@@ -462,10 +462,12 @@ if (localStorage.getItem(BOUTON1_KEY) === 'true') {
     localStorage.setItem('enqueteurConnecte', 'true');
     localStorage.setItem('heureArrivee', Date.now().toString());
     location.reload(); // recharge uniquement si succès
-  } else {
-    alert("Erreur Brevo : " + (data.error || "Erreur inconnue"));
+ } else {
+    const message = data.message || "Une erreur est survenue. Veuillez réessayer plus tard !!";
+    document.getElementById('error').innerText = message;
+    document.getElementById('error').style.display = "block";
   }
-  })
+})
   .catch(error => {
     console.error('Erreur lors de l’envoi du formulaire :', error);
     alert("Une erreur est survenue. Veuillez réessayer plus tard.");
