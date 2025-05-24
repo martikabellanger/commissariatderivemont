@@ -523,7 +523,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
     const formData = new FormData();
     formData.append('email', email);
 
-    const response = await fetch('ton_script.php', {  // Remplace 'ton_script.php' par le vrai chemin PHP
+    const response = await fetch('send.php', {  // Remplace 'ton_script.php' par le vrai chemin PHP
       method: 'POST',
       body: formData,
       headers: {
